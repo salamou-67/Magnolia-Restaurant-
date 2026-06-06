@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu — Magnolia Coffee & Restaurant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #F5F1E8; --dark: #1A1A1A; --gold: #8C6A43;
+      --beige: #D6C3A5; --gold-light: #C9A96E; --white: #FDFCF9;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--cream); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(26,26,26,0.97); border-bottom: 1px solid rgba(140,106,67,0.2); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.85; transition: opacity 0.3s, color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold-light); }
+    .nav-cta { border: 1px solid var(--gold-light); color: var(--gold-light) !important; padding: 0.6rem 1.5rem !important; opacity: 1 !important; transition: background 0.3s !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 1px; background: var(--cream); display: block; }
+
+    /* HERO */
+    .page-hero { padding-top: 80px; position: relative; height: 50vh; min-height: 400px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .page-hero-bg { position: absolute; inset: 0; background: url('https://static2.menufyy.com/magnolia-coffee-restaurant-albums-1.jpg') center/cover; filter: brightness(0.35); }
+    .page-hero-content { position: relative; text-align: center; }
+    .page-tag { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; }
+    .page-title em { font-style: italic; color: var(--gold-light); }
+    .page-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--beige); margin-top: 1rem; opacity: 0.85; }
+
+    /* PRICE BADGE */
+    .price-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(140,106,67,0.15); border: 1px solid rgba(201,169,110,0.3); padding: 0.5rem 1.5rem; margin-top: 1.5rem; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--gold-light); }
+
+    /* FILTER TABS */
+    .filter-section { background: #111; border-bottom: 1px solid rgba(140,106,67,0.15); padding: 0 4rem; position: sticky; top: 80px; z-index: 50; }
+    .filter-tabs { display: flex; overflow-x: auto; gap: 0; scrollbar-width: none; }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+    .filter-tab { padding: 1.2rem 2rem; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--beige); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none; font-family: 'Inter', sans-serif; transition: color 0.3s, border-color 0.3s; }
+    .filter-tab.active { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+    .filter-tab:hover { color: var(--gold-light); }
+
+    /* MENU SECTIONS */
+    .menu-body { padding: 5rem 4rem; max-width: 1300px; margin: 0 auto; }
+    .menu-section { margin-bottom: 5rem; display: none; }
+    .menu-section.visible { display: block; }
+    .section-header { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(140,106,67,0.15); display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .section-header-left .cat-tag { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.5rem; }
+    .section-header-left h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--cream); }
+    .section-header-left h2 em { font-style: italic; color: var(--gold-light); }
+    .section-header-right { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--beige); opacity: 0.7; max-width: 300px; text-align: right; line-height: 1.6; }
+
+    /* DISH GRID */
+    .dishes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(140,106,67,0.1); }
+    .dish-item { background: var(--dark); display: flex; flex-direction: column; transition: background 0.3s; }
+    .dish-item:hover { background: rgba(140,106,67,0.05); }
+    .dish-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; filter: brightness(0.9); transition: filter 0.4s, transform 0.4s; overflow: hidden; display: block; }
+    .dish-img-wrap { overflow: hidden; }
+    .dish-item:hover .dish-img { filter: brightness(1); transform: scale(1.04); }
+    .dish-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .dish-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--cream); margin-bottom: 0.4rem; }
+    .dish-desc { font-size: 0.8rem; color: var(--beige); opacity: 0.75; line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+    .dish-footer { display: flex; align-items: center; justify-content: space-between; }
+    .dish-price { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold-light); }
+    .dish-badge { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(140,106,67,0.15); color: var(--gold-light); padding: 0.25rem 0.6rem; border: 1px solid rgba(201,169,110,0.2); }
+
+    /* COCKTAILS SPECIAL LAYOUT */
+    .cocktails-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(140,106,67,0.1); }
+    .cocktail-item { background: var(--dark); display: grid; grid-template-columns: 160px 1fr; transition: background 0.3s; }
+    .cocktail-item:hover { background: rgba(140,106,67,0.05); }
+    .cocktail-img { width: 160px; height: 160px; object-fit: cover; filter: brightness(0.85); transition: filter 0.4s; }
+    .cocktail-item:hover .cocktail-img { filter: brightness(1); }
+    .cocktail-content { padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .cocktail-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--cream); margin-bottom: 0.4rem; }
+    .cocktail-desc { font-size: 0.78rem; color: var(--beige); opacity: 0.75; line-height: 1.6; margin-bottom: 0.8rem; }
+    .cocktail-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--gold-light); }
+
+    /* PHOTO GALLERY STRIP */
+    .photo-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 5rem; }
+    .photo-strip img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: brightness(0.8); transition: filter 0.4s; }
+    .photo-strip img:hover { filter: brightness(1); }
+
+    /* CTA */
+    .menu-cta { background: rgba(140,106,67,0.08); border: 1px solid rgba(140,106,67,0.2); padding: 4rem; text-align: center; margin-top: 3rem; }
+    .menu-cta h3 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--cream); margin-bottom: 1rem; }
+    .menu-cta p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--beige); margin-bottom: 2rem; opacity: 0.8; }
+    .btn-primary { background: var(--gold); color: var(--white); padding: 1rem 2.5rem; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.3s, transform 0.3s; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* WHATSAPP */
+    .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; background: #25D366; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.3s; }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* FOOTER */
+    footer { background: #0a0a0a; padding: 3rem 4rem; border-top: 1px solid rgba(140,106,67,0.2); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold-light); }
+    footer p { font-size: 0.75rem; color: var(--beige); opacity: 0.4; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-size: 0.75rem; color: var(--beige); text-decoration: none; opacity: 0.6; letter-spacing: 0.1em; text-transform: uppercase; transition: opacity 0.3s; }
+    .footer-links a:hover { opacity: 1; color: var(--gold-light); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 1.5rem 2rem; }
+      .filter-section { padding: 0 2rem; }
+      .menu-body { padding: 4rem 2rem; }
+      .dishes-grid { grid-template-columns: repeat(2, 1fr); }
+      .cocktails-grid { grid-template-columns: 1fr; }
+      .photo-strip { grid-template-columns: repeat(4, 1fr); }
+      footer { padding: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .dishes-grid { grid-template-columns: 1fr; }
+      .cocktail-item { grid-template-columns: 120px 1fr; }
+      .cocktail-img { width: 120px; height: 120px; }
+      .photo-strip { grid-template-columns: repeat(3, 1fr); }
+      .section-header { flex-direction: column; }
+      .section-header-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Magnolia</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html" class="active">Menu</a></li>
+      <li><a href="experiences.html">Experiences</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="reservations.html" class="nav-cta">Book a Table</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
+      <p class="page-tag">Magnolia Coffee & Restaurant</p>
+      <h1 class="page-title">Our <em>Menu</em></h1>
+      <p class="page-sub">Crafted with care. Served with elegance.</p>
+      <div class="price-badge">💰 Price Range: 1,000 – 3,000 DZD per person</div>
+    </div>
+  </div>
+
+  <!-- REAL PHOTO STRIP -->
+  <div class="photo-strip">
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-2.jpg" alt="Magnolia"/>
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-3.jpg" alt="Magnolia"/>
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-4.jpg" alt="Magnolia"/>
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-5.jpg" alt="Magnolia"/>
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-6.jpg" alt="Magnolia"/>
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-7.jpg" alt="Magnolia"/>
+    <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-8.jpg" alt="Magnolia"/>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-section">
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="showCategory('all')">All</button>
+      <button class="filter-tab" onclick="showCategory('starters')">Starters</button>
+      <button class="filter-tab" onclick="showCategory('pizza')">Pizza</button>
+      <button class="filter-tab" onclick="showCategory('burgers')">Burgers</button>
+      <button class="filter-tab" onclick="showCategory('mains')">Main Courses</button>
+      <button class="filter-tab" onclick="showCategory('seafood')">Seafood</button>
+      <button class="filter-tab" onclick="showCategory('desserts')">Desserts</button>
+      <button class="filter-tab" onclick="showCategory('coffee')">Coffee</button>
+      <button class="filter-tab" onclick="showCategory('cocktails')">Cocktails</button>
+    </div>
+  </div>
+
+  <!-- MENU BODY -->
+  <div class="menu-body">
+
+    <!-- STARTERS -->
+    <div class="menu-section visible reveal" id="cat-starters" data-cat="starters">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">To Begin</p>
+          <h2>Starters & <em>Salads</em></h2>
+        </div>
+        <p class="section-header-right">Fresh, light, and crafted to open your appetite.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80" alt="Salade César"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Salade César</p>
+              <p class="dish-desc">Crisp romaine lettuce, parmesan, croutons and Caesar dressing.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">950 DZD</span>
+              <span class="dish-badge">Popular</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Pommes Frites"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Pommes Frites</p>
+              <p class="dish-desc">Golden crispy fries, perfectly seasoned. Neither soggy nor greasy.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">600 DZD</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1540189549336-e6e99eb4b79e?w=600&q=80" alt="Mixed Salad"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Salade Fraîche</p>
+              <p class="dish-desc">Seasonal fresh vegetables with light vinaigrette dressing.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">750 DZD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIZZA -->
+    <div class="menu-section visible reveal" id="cat-pizza" data-cat="pizza">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">From the Oven</p>
+          <h2>Artisan <em>Pizza</em></h2>
+        </div>
+        <p class="section-header-right">Thin crisp crust with authentic Italian-inspired toppings.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://static2.menufyy.com/magnolia-coffee-restaurant-menu-highlight-5.jpg" alt="Pizza Marguerite"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Pizza Marguerite</p>
+              <p class="dish-desc">Fresh tomato, mozzarella, fragrant basil. Authenticity done right.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,200 DZD</span>
+              <span class="dish-badge">Signature</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80" alt="Pizza Quatre Fromages"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Pizza Quatre Fromages</p>
+              <p class="dish-desc">Four-cheese blend on a crispy base, rich and indulgent.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,400 DZD</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=80" alt="Pizza Poulet"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Pizza Poulet</p>
+              <p class="dish-desc">Grilled chicken, peppers, onions and herb tomato sauce.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,350 DZD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BURGERS -->
+    <div class="menu-section visible reveal" id="cat-burgers" data-cat="burgers">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">Handcrafted</p>
+          <h2>Signature <em>Burgers</em></h2>
+        </div>
+        <p class="section-header-right">Praised as one of the best burgers in Oran by our guests.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Signature Burger"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Signature Hamburger</p>
+              <p class="dish-desc">Juicy house-made patty, caramelised onions, lettuce, tomato, special sauce.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,400 DZD</span>
+              <span class="dish-badge">Best Seller</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80" alt="Chicken Burger"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Burger Poulet</p>
+              <p class="dish-desc">Crispy chicken fillet, coleslaw, pickles and house sauce.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,300 DZD</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80" alt="Double Burger"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Double Smash</p>
+              <p class="dish-desc">Double smashed patties, melted cheese, crispy edges, secret sauce.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,800 DZD</span>
+              <span class="dish-badge">Chef's Pick</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAINS -->
+    <div class="menu-section visible reveal" id="cat-mains" data-cat="mains">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">Main Courses</p>
+          <h2>Plats <em>Principaux</em></h2>
+        </div>
+        <p class="section-header-right">Tender cuts, classic preparations, satisfying and refined.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://static2.menufyy.com/magnolia-coffee-restaurant-menu-highlight-8.jpg" alt="Escalope Milanaise"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Escalope Milanaise</p>
+              <p class="dish-desc">Crispy breaded escalope served with golden pommes frites.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,600 DZD</span>
+              <span class="dish-badge">Popular</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=600&q=80" alt="Escalope Poulet"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Escalope de Poulet</p>
+              <p class="dish-desc">Tender chicken escalope, herbs, lemon, served with seasonal sides.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,500 DZD</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600&q=80" alt="Pasta"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Pasta al Forno</p>
+              <p class="dish-desc">Slow-cooked ragù, ricotta cheese, baked to perfection.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,400 DZD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEAFOOD -->
+    <div class="menu-section visible reveal" id="cat-seafood" data-cat="seafood">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">From the Sea</p>
+          <h2>Seafood <em>Selections</em></h2>
+        </div>
+        <p class="section-header-right">Fresh ocean flavours with rich, savory textures.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://static2.menufyy.com/magnolia-coffee-restaurant-menu-highlight-5.jpg" alt="Gratin Fruits de Mer"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Gratin Fruits de Mer</p>
+              <p class="dish-desc">Mixed seafood gratin with cream, herbs and a golden crust.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">2,200 DZD</span>
+              <span class="dish-badge">Signature</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://static2.menufyy.com/magnolia-coffee-restaurant-menu-highlight-6.jpg" alt="Poulpe Grillé"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Poulpe Grillé</p>
+              <p class="dish-desc">Grilled octopus, lemon, olive oil and fresh herbs.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">2,000 DZD</span>
+              <span class="dish-badge">Chef's Pick</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80" alt="Crevettes"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Crevettes Sautées</p>
+              <p class="dish-desc">Sautéed prawns in garlic butter, white wine and fresh parsley.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">1,900 DZD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESSERTS -->
+    <div class="menu-section visible reveal" id="cat-desserts" data-cat="desserts">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">Sweet Endings</p>
+          <h2>Desserts & <em>Cakes</em></h2>
+        </div>
+        <p class="section-header-right">A sweet finish that many patrons have praised.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80" alt="Tiramisu"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Tiramisu au Café</p>
+              <p class="dish-desc">Classic Italian tiramisu with strong coffee flavour. A lingering, pleasant finish.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">900 DZD</span>
+              <span class="dish-badge">Signature</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="Signature Cake"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Signature Cake</p>
+              <p class="dish-desc">House-made layered cake with seasonal flavours. Praised by every guest.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">850 DZD</span>
+              <span class="dish-badge">Best Seller</span>
+            </div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Crème Brûlée"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Crème Brûlée</p>
+              <p class="dish-desc">Classic vanilla custard with a perfectly caramelised sugar crust.</p>
+            </div>
+            <div class="dish-footer">
+              <span class="dish-price">800 DZD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COFFEE -->
+    <div class="menu-section visible reveal" id="cat-coffee" data-cat="coffee">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">Hot & Cold</p>
+          <h2>Coffee & <em>Drinks</em></h2>
+        </div>
+        <p class="section-header-right">Premium beans, expertly prepared for every moment.</p>
+      </div>
+      <div class="dishes-grid">
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="Espresso"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Espresso</p>
+              <p class="dish-desc">Rich, bold single shot of premium arabica coffee.</p>
+            </div>
+            <div class="dish-footer"><span class="dish-price">350 DZD</span></div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1561047029-3000c68339ca?w=600&q=80" alt="Cappuccino"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Cappuccino</p>
+              <p class="dish-desc">Espresso with steamed milk foam, smooth and balanced.</p>
+            </div>
+            <div class="dish-footer"><span class="dish-price">500 DZD</span></div>
+          </div>
+        </div>
+        <div class="dish-item">
+          <div class="dish-img-wrap">
+            <img class="dish-img" src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600&q=80" alt="Caramel Macchiato"/>
+          </div>
+          <div class="dish-content">
+            <div>
+              <p class="dish-name">Caramel Macchiato</p>
+              <p class="dish-desc">Vanilla syrup, steamed milk, espresso, caramel drizzle.</p>
+            </div>
+            <div class="dish-footer"><span class="dish-price">650 DZD</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COCKTAILS -->
+    <div class="menu-section visible reveal" id="cat-cocktails" data-cat="cocktails">
+      <div class="section-header">
+        <div class="section-header-left">
+          <p class="cat-tag">Signature Drinks</p>
+          <h2>Cocktails & <em>Mocktails</em></h2>
+        </div>
+        <p class="section-header-right">Refreshing and balanced — ideal with any meal or on their own.</p>
+      </div>
+      <div class="cocktails-grid">
+        <div class="cocktail-item">
+          <img class="cocktail-img" src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&q=80" alt="Mojito"/>
+          <div class="cocktail-content">
+            <p class="cocktail-name">Mojito</p>
+            <p class="cocktail-desc">Fresh mint, lime, sugar, sparkling water. Refreshing and vibrant.</p>
+            <p class="cocktail-price">900 DZD</p>
+          </div>
+        </div>
+        <div class="cocktail-item">
+          <img class="cocktail-img" src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=400&q=80" alt="Piña Colada"/>
+          <div class="cocktail-content">
+            <p class="cocktail-name">Piña Colada</p>
+            <p class="cocktail-desc">Pineapple, coconut cream, tropical and smooth.</p>
+            <p class="cocktail-price">1,000 DZD</p>
+          </div>
+        </div>
+        <div class="cocktail-item">
+          <img class="cocktail-img" src="https://images.unsplash.com/photo-1587223962930-cb7f31384c19?w=400&q=80" alt="Baby Breeze"/>
+          <div class="cocktail-content">
+            <p class="cocktail-name">Baby Breeze</p>
+            <p class="cocktail-desc">A house favourite — fruity, light and beautifully presented.</p>
+            <p class="cocktail-price">950 DZD</p>
+          </div>
+        </div>
+        <div class="cocktail-item">
+          <img class="cocktail-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80" alt="Signature Cocktail"/>
+          <div class="cocktail-content">
+            <p class="cocktail-name">Magnolia Special</p>
+            <p class="cocktail-desc">The chef's seasonal signature — ask your server for today's creation.</p>
+            <p class="cocktail-price">1,100 DZD</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM CTA -->
+    <div class="menu-cta reveal">
+      <h3>Ready to experience Magnolia?</h3>
+      <p>Book your table and enjoy every dish in our warm, elegant atmosphere.</p>
+      <a href="reservations.html" class="btn-primary">Reserve Your Table</a>
+    </div>
+
+  </div>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/2130550275625" target="_blank" class="whatsapp-float">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Magnolia</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="experiences.html">Experiences</a></li>
+      <li><a href="reservations.html">Reservations</a></li>
+    </ul>
+    <p>© 2025 Magnolia Coffee & Restaurant. Oran, Algeria.</p>
+  </footer>
+
+  <script>
+    function showCategory(cat) {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.menu-section').forEach(s => {
+        if (cat === 'all' || s.dataset.cat === cat) {
+          s.classList.add('visible');
+        } else {
+          s.classList.remove('visible');
+        }
+      });
+    }
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      const isVisible = links.style.display === 'flex';
+      links.style.display = isVisible ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '70px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'rgba(26,26,26,0.98)';
+      links.style.padding = '2rem';
+      links.style.gap = '1.5rem';
+    }
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
