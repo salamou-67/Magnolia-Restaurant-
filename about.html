@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Magnolia Coffee & Restaurant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #F5F1E8; --dark: #1A1A1A; --gold: #8C6A43;
+      --beige: #D6C3A5; --gold-light: #C9A96E; --white: #FDFCF9;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--cream); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(26,26,26,0.97); border-bottom: 1px solid rgba(140,106,67,0.2); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.85; transition: opacity 0.3s, color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold-light); }
+    .nav-cta { border: 1px solid var(--gold-light); color: var(--gold-light) !important; padding: 0.6rem 1.5rem !important; opacity: 1 !important; transition: background 0.3s !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 1px; background: var(--cream); display: block; }
+
+    /* HERO */
+    .page-hero { padding-top: 80px; position: relative; height: 65vh; min-height: 500px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: url('https://static2.menufyy.com/magnolia-coffee-restaurant-albums-1.jpg') center/cover; animation: kenBurns 20s ease-in-out infinite alternate; }
+    @keyframes kenBurns { from { transform: scale(1); } to { transform: scale(1.07); } }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(26,26,26,0.3) 0%, rgba(26,26,26,0.8) 100%); }
+    .hero-content { position: relative; text-align: center; padding: 0 2rem; max-width: 800px; }
+    .page-tag { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; }
+    .page-title em { font-style: italic; color: var(--gold-light); }
+    .page-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--beige); margin-top: 1rem; opacity: 0.85; line-height: 1.7; }
+
+    /* STORY SECTION */
+    .story-section { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+    .story-images { position: relative; }
+    .story-img-main { width: 100%; height: 70%; object-fit: cover; filter: brightness(0.85); display: block; }
+    .story-img-accent { width: 60%; height: 35%; object-fit: cover; filter: brightness(0.9); display: block; margin-left: auto; margin-top: -5%; position: relative; z-index: 2; border: 4px solid var(--dark); }
+    .story-content { padding: 6rem 4rem; background: #0f0f0f; display: flex; flex-direction: column; justify-content: center; }
+    .story-tag { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .story-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--cream); margin-bottom: 1.5rem; line-height: 1.2; }
+    .story-title em { font-style: italic; color: var(--gold-light); }
+    .story-line { width: 40px; height: 1px; background: var(--gold-light); margin-bottom: 1.8rem; }
+    .story-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--beige); line-height: 1.9; opacity: 0.85; margin-bottom: 1.2rem; }
+
+    /* NUMBERS */
+    .numbers-section { background: #111; padding: 5rem 4rem; border-top: 1px solid rgba(140,106,67,0.15); border-bottom: 1px solid rgba(140,106,67,0.15); }
+    .numbers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(140,106,67,0.12); max-width: 1000px; margin: 0 auto; }
+    .number-item { background: #111; padding: 3rem 2rem; text-align: center; }
+    .number-val { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold-light); line-height: 1; margin-bottom: 0.5rem; }
+    .number-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--beige); opacity: 0.7; }
+
+    /* MISSION */
+    .mission-section { padding: 7rem 4rem; background: var(--dark); text-align: center; }
+    .mission-inner { max-width: 750px; margin: 0 auto; }
+    .mission-tag { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .mission-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--cream); margin-bottom: 2rem; line-height: 1.2; }
+    .mission-title em { font-style: italic; color: var(--gold-light); }
+    .mission-quote { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-style: italic; color: var(--cream); line-height: 1.6; margin-bottom: 2rem; position: relative; padding: 0 2rem; }
+    .mission-quote::before { content: '"'; font-size: 6rem; color: rgba(201,169,110,0.12); position: absolute; top: -2rem; left: -0.5rem; font-family: 'Playfair Display', serif; line-height: 1; }
+    .mission-line { width: 60px; height: 1px; background: var(--gold-light); margin: 0 auto 1.5rem; }
+    .mission-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--beige); line-height: 1.9; opacity: 0.8; }
+
+    /* VALUES */
+    .values-section { background: #0f0f0f; padding: 6rem 4rem; }
+    .values-header { text-align: center; margin-bottom: 4rem; }
+    .values-tag { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .values-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--cream); }
+    .values-title em { font-style: italic; color: var(--gold-light); }
+    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(140,106,67,0.12); max-width: 1100px; margin: 0 auto; }
+    .value-card { background: #0f0f0f; padding: 3rem 2rem; text-align: center; transition: background 0.4s; }
+    .value-card:hover { background: rgba(140,106,67,0.07); }
+    .value-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+    .value-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--cream); margin-bottom: 0.8rem; }
+    .value-desc { font-size: 0.83rem; color: var(--beige); line-height: 1.75; opacity: 0.75; }
+
+    /* ATMOSPHERE SPLIT */
+    .atm-section { display: grid; grid-template-columns: 1fr 1fr; }
+    .atm-img-side { position: relative; min-height: 500px; }
+    .atm-img-side img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.75); }
+    .atm-text-side { background: #111; padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+    .atm-tag { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .atm-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--cream); margin-bottom: 1.5rem; line-height: 1.2; }
+    .atm-title em { font-style: italic; color: var(--gold-light); }
+    .atm-line { width: 40px; height: 1px; background: var(--gold-light); margin-bottom: 1.5rem; }
+    .atm-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--beige); line-height: 1.9; opacity: 0.85; margin-bottom: 2rem; }
+    .atm-details { display: flex; flex-direction: column; gap: 1rem; }
+    .atm-detail { display: flex; gap: 1rem; align-items: flex-start; }
+    .atm-detail-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .atm-detail-text { font-size: 0.85rem; color: var(--beige); opacity: 0.8; line-height: 1.6; }
+    .atm-detail-text strong { color: var(--gold-light); display: block; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.2rem; font-weight: 400; }
+
+    /* INSTAGRAM */
+    .instagram-section { background: var(--dark); padding: 5rem 4rem; }
+    .instagram-header { text-align: center; margin-bottom: 3rem; }
+    .insta-tag { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+    .insta-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--cream); margin-bottom: 0.5rem; }
+    .insta-handle { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-light); }
+    .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; max-width: 1100px; margin: 0 auto 2rem; }
+    .insta-item { aspect-ratio: 1; overflow: hidden; position: relative; }
+    .insta-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: filter 0.4s, transform 0.5s; }
+    .insta-item:hover img { filter: brightness(1); transform: scale(1.08); }
+    .insta-cta { text-align: center; }
+    .btn-insta { display: inline-flex; align-items: center; gap: 0.8rem; background: transparent; border: 1px solid rgba(201,169,110,0.35); color: var(--gold-light); padding: 0.9rem 2rem; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; transition: background 0.3s; font-family: 'Inter', sans-serif; }
+    .btn-insta:hover { background: rgba(201,169,110,0.08); }
+
+    /* FINAL CTA */
+    .final-cta { background: #0a0a0a; padding: 7rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .final-cta::before { content: ''; position: absolute; inset: 0; background: url('https://static2.menufyy.com/magnolia-coffee-restaurant-albums-4.jpg') center/cover; opacity: 0.07; }
+    .final-inner { position: relative; max-width: 650px; margin: 0 auto; }
+    .final-tag { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.5rem; }
+    .final-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); color: var(--cream); margin-bottom: 1rem; line-height: 1.2; }
+    .final-title em { font-style: italic; color: var(--gold-light); }
+    .final-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--beige); margin-bottom: 3rem; opacity: 0.8; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: var(--white); padding: 1rem 2.5rem; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.3s, transform 0.3s; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--cream); padding: 1rem 2.5rem; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; display: inline-block; border: 1px solid rgba(245,241,232,0.3); transition: border-color 0.3s, color 0.3s; }
+    .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; background: #25D366; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.3s; }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* FOOTER */
+    footer { background: #0a0a0a; padding: 5rem 4rem 2rem; border-top: 1px solid rgba(140,106,67,0.2); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 4rem; margin-bottom: 4rem; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold-light); margin-bottom: 1rem; }
+    .footer-desc { font-size: 0.85rem; color: var(--beige); line-height: 1.8; opacity: 0.7; max-width: 260px; }
+    .footer-col h4 { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.5rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.7rem; }
+    .footer-col ul li a { font-size: 0.85rem; color: var(--beige); text-decoration: none; opacity: 0.7; transition: opacity 0.3s, color 0.3s; }
+    .footer-col ul li a:hover { opacity: 1; color: var(--gold-light); }
+    .footer-contact p { font-size: 0.85rem; color: var(--beige); opacity: 0.7; margin-bottom: 0.6rem; line-height: 1.6; }
+    .footer-contact a { color: var(--beige); text-decoration: none; transition: color 0.3s; }
+    .footer-contact a:hover { color: var(--gold-light); }
+    .footer-bottom { border-top: 1px solid rgba(140,106,67,0.12); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.75rem; color: var(--beige); opacity: 0.4; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 1.5rem 2rem; }
+      .story-section { grid-template-columns: 1fr; }
+      .story-images { min-height: 400px; }
+      .story-img-main { height: 100%; }
+      .story-img-accent { display: none; }
+      .story-content { padding: 4rem 2rem; }
+      .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .atm-section { grid-template-columns: 1fr; }
+      .atm-img-side { min-height: 350px; }
+      .atm-text-side { padding: 4rem 2rem; }
+      .insta-grid { grid-template-columns: repeat(3, 1fr); }
+      .mission-section { padding: 5rem 2rem; }
+      .values-section { padding: 5rem 2rem; }
+      .instagram-section { padding: 4rem 2rem; }
+      .final-cta { padding: 5rem 2rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      footer { padding: 4rem 2rem 2rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .insta-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .insta-grid { grid-template-columns: repeat(2, 1fr); }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Magnolia</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="experiences.html">Experiences</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="reservations.html" class="nav-cta">Book a Table</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="page-tag">Our Story</p>
+      <h1 class="page-title">About <em>Magnolia</em></h1>
+      <p class="page-sub">A place born from a passion for great food, warm hospitality, and unforgettable moments.</p>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div class="story-section">
+    <div class="story-images">
+      <img class="story-img-main" src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-2.jpg" alt="Magnolia Interior"/>
+      <img class="story-img-accent" src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-5.jpg" alt="Magnolia Food"/>
+    </div>
+    <div class="story-content reveal">
+      <p class="story-tag">How It Began</p>
+      <h2 class="story-title">Born From a Love of <em>Good Moments</em></h2>
+      <div class="story-line"></div>
+      <p class="story-text">Magnolia Coffee & Restaurant was created with a single vision: to give the people of Oran a place that felt truly special. A place where the food is exceptional, the atmosphere is warm, and every visit leaves you with a memory worth keeping.</p>
+      <p class="story-text">Located in the heart of Millennium 1, Magnolia quickly became one of Oran's most talked-about dining destinations — earning over 219 Google reviews and a loyal community of 32,000 followers on Instagram who return again and again.</p>
+      <p class="story-text">From birthday celebrations to quiet romantic dinners, from family gatherings to business lunches — Magnolia has become the restaurant Oranais choose when the occasion truly matters.</p>
+    </div>
+  </div>
+
+  <!-- NUMBERS -->
+  <div class="numbers-section reveal">
+    <div class="numbers-grid">
+      <div class="number-item">
+        <div class="number-val">219+</div>
+        <div class="number-label">Google Reviews</div>
+      </div>
+      <div class="number-item">
+        <div class="number-val">32K</div>
+        <div class="number-label">Instagram Followers</div>
+      </div>
+      <div class="number-item">
+        <div class="number-val">4.5★</div>
+        <div class="number-label">Average Rating</div>
+      </div>
+      <div class="number-item">
+        <div class="number-val">7</div>
+        <div class="number-label">Days a Week</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <div class="mission-section reveal">
+    <div class="mission-inner">
+      <p class="mission-tag">Our Mission</p>
+      <h2 class="mission-title">Why We Do <em>What We Do</em></h2>
+      <div class="mission-line"></div>
+      <p class="mission-quote">To create memorable dining experiences that bring people together — through exceptional food, genuine hospitality, and a space that feels like home.</p>
+      <p class="mission-text">Every dish we serve, every table we set, every event we host — it all comes back to this mission. We believe that a great meal is more than food on a plate. It is a feeling. A conversation. A memory. And we work every day to make sure Magnolia delivers exactly that.</p>
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <div class="values-section">
+    <div class="values-header reveal">
+      <p class="values-tag">What Drives Us</p>
+      <h2 class="values-title">Our <em>Values</em></h2>
+    </div>
+    <div class="values-grid reveal">
+      <div class="value-card">
+        <span class="value-icon">🍽️</span>
+        <p class="value-name">Quality</p>
+        <p class="value-desc">We never compromise on ingredients, preparation, or presentation. Every dish leaving our kitchen must meet the highest standard.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">🤝</span>
+        <p class="value-name">Hospitality</p>
+        <p class="value-desc">Warm, attentive, and genuine service. We treat every guest like family — because that is how great restaurants are built.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">✨</span>
+        <p class="value-name">Atmosphere</p>
+        <p class="value-desc">A chic, elegant space designed to make every moment feel elevated — from the lighting to the music to the table setting.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">🎯</span>
+        <p class="value-name">Attention to Detail</p>
+        <p class="value-desc">The small things make the biggest difference. We obsess over every detail so you never have to think about it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATMOSPHERE SPLIT -->
+  <div class="atm-section">
+    <div class="atm-img-side">
+      <img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-9.jpg" alt="Magnolia Atmosphere"/>
+    </div>
+    <div class="atm-text-side reveal">
+      <p class="atm-tag">The Space</p>
+      <h2 class="atm-title">A Space Designed to <em>Inspire</em></h2>
+      <div class="atm-line"></div>
+      <p class="atm-text">Every corner of Magnolia has been thoughtfully crafted. The warm lighting, the elegant furniture, the carefully chosen décor — everything works together to create an atmosphere that is both sophisticated and welcoming.</p>
+      <div class="atm-details">
+        <div class="atm-detail">
+          <span class="atm-detail-icon">📍</span>
+          <div class="atm-detail-text">
+            <strong>Location</strong>
+            Promotion Immobilière Benammar, Millennium 1, Oran
+          </div>
+        </div>
+        <div class="atm-detail">
+          <span class="atm-detail-icon">🕐</span>
+          <div class="atm-detail-text">
+            <strong>Opening Hours</strong>
+            Lunch 12:00–15:00 · Dinner 20:00–00:00 · 7 days a week
+          </div>
+        </div>
+        <div class="atm-detail">
+          <span class="atm-detail-icon">📞</span>
+          <div class="atm-detail-text">
+            <strong>Reservations</strong>
+            0550 27 56 25 · magnoliacoffeerestaurant@gmail.com
+          </div>
+        </div>
+        <div class="atm-detail">
+          <span class="atm-detail-icon">📸</span>
+          <div class="atm-detail-text">
+            <strong>Follow Us</strong>
+            @magnoliacoffeerestaurant · 32K followers on Instagram
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTAGRAM -->
+  <div class="instagram-section">
+    <div class="instagram-header reveal">
+      <p class="insta-tag">Follow Our Story</p>
+      <h2 class="insta-title">Find Us on Instagram</h2>
+      <p class="insta-handle">@magnoliacoffeerestaurant</p>
+    </div>
+    <div class="insta-grid reveal">
+      <div class="insta-item"><img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-2.jpg" alt="Magnolia"/></div>
+      <div class="insta-item"><img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-3.jpg" alt="Magnolia"/></div>
+      <div class="insta-item"><img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-5.jpg" alt="Magnolia"/></div>
+      <div class="insta-item"><img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-7.jpg" alt="Magnolia"/></div>
+      <div class="insta-item"><img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-8.jpg" alt="Magnolia"/></div>
+      <div class="insta-item"><img src="https://static2.menufyy.com/magnolia-coffee-restaurant-albums-9.jpg" alt="Magnolia"/></div>
+    </div>
+    <div class="insta-cta reveal">
+      <a href="https://instagram.com/magnoliacoffeerestaurant" target="_blank" class="btn-insta">
+        📸 Follow @magnoliacoffeerestaurant
+      </a>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <div class="final-inner reveal">
+      <p class="final-tag">Come Visit Us</p>
+      <h2 class="final-title">Experience Magnolia <em>for Yourself</em></h2>
+      <p class="final-sub">Words can describe it. But nothing compares to the feeling of being there. We look forward to welcoming you.</p>
+      <div class="cta-btns">
+        <a href="reservations.html" class="btn-primary">Reserve Your Table</a>
+        <a href="menu.html" class="btn-outline">Explore the Menu</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/2130550275625" target="_blank" class="whatsapp-float">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Magnolia</div>
+        <p class="footer-desc">A premium dining destination in Oran. Where great food meets great moments.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="experiences.html">Experiences</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="reservations.html">Reservations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a>Lunch: 12:00 – 15:00</a></li>
+          <li><a>Dinner: 20:00 – 00:00</a></li>
+          <li><a>Open 7 days a week</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <p>📍 Millennium 1, Oran, Algeria</p>
+        <p>📞 <a href="tel:+2130550275625">0550 27 56 25</a></p>
+        <p>✉️ <a href="mailto:magnoliacoffeerestaurant@gmail.com">magnoliacoffeerestaurant@gmail.com</a></p>
+        <p>📸 <a href="https://instagram.com/magnoliacoffeerestaurant" target="_blank">@magnoliacoffeerestaurant</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Magnolia Coffee & Restaurant. All rights reserved.</p>
+      <p>Oran, Algeria</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      const isVisible = links.style.display === 'flex';
+      links.style.display = isVisible ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '70px';
+      links.style.left = '0'; links.style.right = '0';
+      links.style.background = 'rgba(26,26,26,0.98)';
+      links.style.padding = '2rem';
+      links.style.gap = '1.5rem';
+    }
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
